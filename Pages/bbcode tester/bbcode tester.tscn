@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq6gigda1jw5e"]
+
+[ext_resource type="Script" path="res://scene scripts/BBCODE Tester/bbcode tester.gd" id="1_5m88s"]
+[ext_resource type="Shader" path="res://assets/shaders/CRT.gdshader" id="2_vomp7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gx7i1"]
+shader = ExtResource("2_vomp7")
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/scan_line_amount = 0.05
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 2.5
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.135
+shader_parameter/roll_speed = 2.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
+[node name="BbcodeTester" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5m88s")
+
+[node name="Back Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.015
+anchor_right = 0.048
+anchor_bottom = 0.063
+offset_left = -0.368001
+offset_top = 0.28
+offset_right = -0.296001
+offset_bottom = 0.175999
+mouse_default_cursor_shape = 2
+text = "Back"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 10.0
+offset_bottom = 58.0
+grow_horizontal = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[b][font_size=30][center]BBCODE TESTER"
+
+[node name="BBCodeTestBox" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.156
+anchor_top = 0.231
+anchor_right = 0.851
+anchor_bottom = 0.849
+offset_left = 0.287994
+offset_top = 0.311996
+offset_right = -0.35199
+offset_bottom = -0.152039
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BBCodeTestBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BBCodeTestText" type="RichTextLabel" parent="BBCodeTestBox/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+
+[node name="BBCodeTestTextEdit" type="TextEdit" parent="BBCodeTestBox/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "your text here. you can make it [b]bold[/b] [i]italic[/i] or even [wave][rainbow]rainbow[/rainbow][/wave]"
+wrap_mode = 1
+
+[node name="Overlay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_gx7i1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="pressed" from="Back Button" to="." method="_on_back_button_pressed"]

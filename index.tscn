@@ -1,0 +1,257 @@
+[gd_scene load_steps=20 format=3 uid="uid://5ygbtmfx8hxl"]
+
+[ext_resource type="Shader" path="res://assets/shaders/CRT.gdshader" id="1_1hd1w"]
+[ext_resource type="Shader" path="res://assets/shaders/transparency.gdshader" id="1_a1mp4"]
+[ext_resource type="Script" path="res://scene scripts/index/index.gd" id="1_q3lav"]
+[ext_resource type="Texture2D" uid="uid://cxke2c6mdc55d" path="res://assets/logos/twitter.png" id="2_gbfmo"]
+[ext_resource type="Texture2D" uid="uid://cu6gl46sdlhvp" path="res://assets/logos/twitch.png" id="2_x0q7w"]
+[ext_resource type="Shader" path="res://assets/shaders/checkerboard.gdshader" id="5_n8mfj"]
+
+[sub_resource type="Gradient" id="Gradient_h7sjx"]
+colors = PackedColorArray(0.923819, 0.518259, 0.799163, 1, 0.195241, 0.693698, 0.889641, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vh2hn"]
+gradient = SubResource("Gradient_h7sjx")
+width = 128
+height = 128
+fill_from = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlmox"]
+shader = ExtResource("1_a1mp4")
+shader_parameter/key_color = Color(1, 1, 0, 1)
+shader_parameter/threshold = 0.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ogaxc"]
+shader = ExtResource("1_1hd1w")
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/scan_line_amount = 0.05
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 2.5
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.135
+shader_parameter/roll_speed = 2.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myijp"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.544283, 0.552166, 0.493146, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_adlp1"]
+material = SubResource("StandardMaterial3D_myijp")
+
+[sub_resource type="Animation" id="Animation_hak3k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ywrx6"]
+resource_name = "speen"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.28319, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a1dic"]
+_data = {
+"RESET": SubResource("Animation_hak3k"),
+"speen": SubResource("Animation_ywrx6")
+}
+
+[sub_resource type="Environment" id="Environment_h25p6"]
+background_mode = 1
+background_color = Color(1, 1, 0, 1)
+ambient_light_source = 1
+reflected_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2dt5"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_isff3"]
+material = SubResource("StandardMaterial3D_y2dt5")
+size = Vector2(20, 20)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uax4r"]
+render_priority = 0
+shader = ExtResource("5_n8mfj")
+shader_parameter/grid_size_x = 20.0
+shader_parameter/grid_size_y = 20.0
+
+[node name="Index" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q3lav")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_vh2hn")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_wlmox")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.12577)
+
+[node name="toptext" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.079
+anchor_right = 1.0
+anchor_bottom = 0.16
+offset_top = -0.192001
+offset_bottom = 0.319992
+bbcode_enabled = true
+text = "[outline_color=000000][outline_size=8][font_size=32][wave connected=0][center]CrazyKitty's Thing v2"
+fit_content = true
+
+[node name="subtext" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.153
+anchor_right = 1.0
+anchor_bottom = 0.224
+offset_top = -0.144005
+offset_bottom = -0.152008
+bbcode_enabled = true
+text = "[outline_color=000000][outline_size=8][font_size=16][wave connected=0][center]subtext"
+fit_content = true
+
+[node name="GimmickPage" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.866
+anchor_top = 0.11
+anchor_right = 0.991
+anchor_bottom = 0.188
+offset_left = 0.36792
+offset_top = -0.280006
+offset_right = 0.36792
+offset_bottom = 0.175995
+mouse_default_cursor_shape = 2
+text = "Stream Gimmicks"
+
+[node name="OLD SITE" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.898
+anchor_top = 0.015
+anchor_right = 0.991
+anchor_bottom = 0.094
+offset_left = 0.503906
+offset_top = 0.28
+offset_right = 0.368042
+offset_bottom = 0.0879974
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+text = "old site"
+
+[node name="Social Medias" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.923
+anchor_right = 0.043
+anchor_bottom = 0.985
+offset_left = -0.368001
+offset_top = -0.104004
+offset_right = 43.464
+offset_bottom = -0.280029
+
+[node name="TWITCH" type="TextureButton" parent="Social Medias"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_x0q7w")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TWITTER" type="TextureButton" parent="Social Medias"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_gbfmo")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Overlay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ogaxc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_adlp1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.0564577, -0.995619, 0.0745315, 0.601175, 0.0935009, 0.793628, -0.79712, 7.24505e-08, 0.603821, 2.05625, 1.74041, 0.0798411)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a1dic")
+}
+autoplay = "speen"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h25p6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40275, 0)
+mesh = SubResource("PlaneMesh_isff3")
+surface_material_override/0 = SubResource("ShaderMaterial_uax4r")
+
+[connection signal="meta_clicked" from="subtext" to="." method="_on_subtext_meta_clicked"]
+[connection signal="pressed" from="GimmickPage" to="." method="_on_gimmick_page_pressed"]
+[connection signal="pressed" from="OLD SITE" to="." method="_on_old_site_pressed"]
+[connection signal="pressed" from="Social Medias/TWITCH" to="." method="_on_twitch_pressed"]
+[connection signal="pressed" from="Social Medias/TWITTER" to="." method="_on_twitter_pressed"]

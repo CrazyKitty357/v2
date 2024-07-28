@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dh33iaqkplrfa"]
+
+[node name="SubtextCredits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[font_size=26][center]CREDITS[/center][/font_size]
+
+[center]
+\"geiser approved\" - imgeiser
+\"[color=8f1b13]crimson crimson crimson crimson[/color]\" - that_one_valokas
+\"Sponsored by RAID SHADOW LEGENDS\" - that_one_valokas
+\"[color=red]WAKE UP WAKE UP WAKE UP WAKE UP WAKE UP[/color]\" - that_one_valokas
+[b]-----------------------[/b]
+you can add your own by redeeming the \"add subtext\" redeem and in the next major patch your name and your quote will show up here."
+scroll_following = true
