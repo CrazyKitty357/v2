@@ -15,7 +15,8 @@ var strings = [
 	"(not) Sponsored by RAID SHADOW LEGENDS", #that_one_valokas
 	"(not) Sponsored by Godot (yet)",
 	"AS SEEN ON [url]https://twitch.tv/cr4zyk1tty[/url]", 
-	"[color=red]WAKE UP WAKE UP WAKE UP WAKE UP WAKE UP[/color]" #that_one_valokas
+	"[color=red]WAKE UP WAKE UP WAKE UP WAKE UP WAKE UP[/color]", #that_one_valokas
+	"i never stopped believing"
 ]
 
 @onready var subtext = $subtext

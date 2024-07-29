@@ -14,3 +14,6 @@ func _on_text_changed():
 
 func _on_back_button_pressed():
 	get_tree().change_scene_to_file("res://Pages/stream gimmick/stream gimmick.tscn")
+
+func _on_bottom_text_meta_clicked(meta):
+	OS.shell_open(meta)

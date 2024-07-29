@@ -42,7 +42,7 @@ shader_parameter/pixel_strength = -2.0
 shading_mode = 2
 diffuse_mode = 3
 specular_mode = 1
-albedo_color = Color(0.544283, 0.552166, 0.493146, 1)
+albedo_color = Color(0.637843, 0.637843, 0.637843, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_adlp1"]
 material = SubResource("StandardMaterial3D_myijp")
@@ -234,7 +234,7 @@ color = Color(1, 1, 1, 0)
 mesh = SubResource("BoxMesh_adlp1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.0564577, -0.995619, 0.0745315, 0.601175, 0.0935009, 0.793628, -0.79712, 7.24505e-08, 0.603821, 2.05625, 1.74041, 0.0798411)
+transform = Transform3D(0.0564578, -0.995619, 0.0745316, 0.568701, 0.0934257, 0.817222, -0.820605, -0.00375234, 0.571484, 2.05625, 1.74041, 0.0798411)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

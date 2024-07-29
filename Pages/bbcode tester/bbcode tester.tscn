@@ -43,12 +43,12 @@ offset_bottom = 0.175999
 mouse_default_cursor_shape = 2
 text = "Back"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Scene Title" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 10.0
-offset_bottom = 58.0
+offset_top = 62.0
+offset_bottom = 110.0
 grow_horizontal = 2
 mouse_filter = 2
 bbcode_enabled = true
@@ -64,6 +64,15 @@ offset_left = 0.287994
 offset_top = 0.311996
 offset_right = -0.35199
 offset_bottom = -0.152039
+
+[node name="ColorRect" type="ColorRect" parent="BBCodeTestBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.243314, 0.240321, 0.241067, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BBCodeTestBox"]
 layout_mode = 1
@@ -96,4 +105,19 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
+[node name="Bottom Text" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.156
+anchor_top = 0.849
+anchor_right = 0.851
+anchor_bottom = 0.849
+offset_left = 0.287994
+offset_top = -0.152039
+offset_right = -0.35199
+offset_bottom = 69.848
+bbcode_enabled = true
+text = "[center]you can read the bbcode documentation [url=https://docs.godotengine.org/en/4.1/tutorials/ui/bbcode_in_richtextlabel.html]here[/url]"
+
 [connection signal="pressed" from="Back Button" to="." method="_on_back_button_pressed"]
+[connection signal="meta_clicked" from="Bottom Text" to="." method="_on_bottom_text_meta_clicked"]

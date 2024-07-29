@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/user/Documents/CrazyKitty's Shenanigans/video.avi"
+movie_writer/movie_file="C:/Users/user/Documents/sitev2/v2/movie/video.avi"
 
 [input]
 
