@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 movie
+assets/models/jetpack.vrm
+assets/models/jetpack.vrm.import

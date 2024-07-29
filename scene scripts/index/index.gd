@@ -24,17 +24,29 @@ var strings = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	change_text()
+	rng()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if Input.is_action_just_pressed("[DEBUG] change subtext"):
 		change_text()
+		rng()
 
 func change_text():
 	var random_index = randi() % strings.size()
 	subtext.text = "[outline_color=000000][outline_size=8][font_size=16][wave connected=0][center]" + strings[random_index]
+
+func rng():
+	var rng_number = randi_range(1,10000)
+	print(rng_number)
+	if rng_number == 1:
+		print("THE NUMBER IS REAL")
+		$cube.hide()
+		$jetpack.show()
+		$"jetpack credit".show()
 
 # button controls
 
@@ -45,6 +57,10 @@ func _on_twitch_pressed():
 func _on_twitter_pressed():
 	print("twitter")
 	OS.shell_open("https://x.com/CrazyKitty357")
+
+func _on_github_pressed():
+	print("to the github repo")
+	OS.shell_open("https://github.com/CrazyKitty357/v2")
 
 func _on_old_site_pressed():
 	print("go to the old site")

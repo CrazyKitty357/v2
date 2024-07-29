@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://5ygbtmfx8hxl"]
+[gd_scene load_steps=23 format=3 uid="uid://5ygbtmfx8hxl"]
 
 [ext_resource type="Shader" path="res://assets/shaders/CRT.gdshader" id="1_1hd1w"]
 [ext_resource type="Shader" path="res://assets/shaders/transparency.gdshader" id="1_a1mp4"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cxke2c6mdc55d" path="res://assets/logos/twitter.png" id="2_gbfmo"]
 [ext_resource type="Texture2D" uid="uid://cu6gl46sdlhvp" path="res://assets/logos/twitch.png" id="2_x0q7w"]
 [ext_resource type="Shader" path="res://assets/shaders/checkerboard.gdshader" id="5_n8mfj"]
+[ext_resource type="PackedScene" uid="uid://d34vxj4qylf6a" path="res://assets/models/jetpack.vrm" id="7_kxecg"]
+[ext_resource type="Script" path="res://addons/vrm/vrm_spring_bone.gd" id="8_g2p4r"]
 
 [sub_resource type="Gradient" id="Gradient_h7sjx"]
 colors = PackedColorArray(0.923819, 0.518259, 0.799163, 1, 0.195241, 0.693698, 0.889641, 1)
@@ -52,10 +54,22 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/path = NodePath("cube:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("jetpack:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -69,7 +83,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/path = NodePath("cube:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -77,6 +91,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(6.28319, 6.28319, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("jetpack:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a1dic"]
@@ -102,6 +128,25 @@ render_priority = 0
 shader = ExtResource("5_n8mfj")
 shader_parameter/grid_size_x = 20.0
 shader_parameter/grid_size_y = 20.0
+
+[sub_resource type="Resource" id="Resource_07nyl"]
+resource_name = "Tail1"
+script = ExtResource("8_g2p4r")
+comment = ""
+joint_nodes = PackedStringArray("Tail1", "Tail2", "Tail3", "Tail4", "Tail5", "Tail6", "Tail6_end", "")
+stiffness_scale = 1.0
+drag_force_scale = 0.4
+hit_radius_scale = 0.02
+gravity_scale = 0.0
+gravity_dir_default = Vector3(0, -1, 0)
+collider_groups = Array[Resource("res://addons/vrm/vrm_collider_group.gd")]([])
+stiffness_force = PackedFloat64Array()
+gravity_power = PackedFloat64Array()
+gravity_dir = PackedVector3Array()
+drag_force = PackedFloat64Array()
+hit_radius = PackedFloat64Array()
+center_bone = ""
+center_node = NodePath("")
 
 [node name="Index" type="Control"]
 layout_mode = 3
@@ -191,6 +236,14 @@ grow_vertical = 2
 mouse_default_cursor_shape = 2
 text = "old site"
 
+[node name="Github" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 115.0
+offset_bottom = 41.0
+text = "Source Code"
+
 [node name="Social Medias" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -219,6 +272,23 @@ texture_normal = ExtResource("2_gbfmo")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="jetpack credit" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 850.0
+offset_top = -47.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+text = "[outline_color=000000][outline_size=6][right]Model of [url=https://twitch.tv/jeanfaymas]Jean Faymas[/url] masott by [url=https://x.com/Piesonscreation]Gon[/url]"
+fit_content = true
+
 [node name="Overlay" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_ogaxc")
 layout_mode = 1
@@ -230,7 +300,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="cube" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_adlp1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -250,8 +320,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40275, 0)
 mesh = SubResource("PlaneMesh_isff3")
 surface_material_override/0 = SubResource("ShaderMaterial_uax4r")
 
+[node name="jetpack" parent="." instance=ExtResource("7_kxecg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 1.23)
+visible = false
+spring_bones = Array[ExtResource("8_g2p4r")]([SubResource("Resource_07nyl")])
+
 [connection signal="meta_clicked" from="subtext" to="." method="_on_subtext_meta_clicked"]
 [connection signal="pressed" from="GimmickPage" to="." method="_on_gimmick_page_pressed"]
 [connection signal="pressed" from="OLD SITE" to="." method="_on_old_site_pressed"]
+[connection signal="pressed" from="Github" to="." method="_on_github_pressed"]
 [connection signal="pressed" from="Social Medias/TWITCH" to="." method="_on_twitch_pressed"]
 [connection signal="pressed" from="Social Medias/TWITTER" to="." method="_on_twitter_pressed"]

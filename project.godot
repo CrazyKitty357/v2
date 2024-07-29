@@ -17,7 +17,11 @@ config/icon="res://icon.svg"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/user/Documents/sitev2/v2/movie/video.avi"
+movie_writer/movie_file="/home/user/projects/Godot/v2/movie/video.avi"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/Godot-MToon-Shader/plugin.cfg", "res://addons/vrm/plugin.cfg")
 
 [input]
 
