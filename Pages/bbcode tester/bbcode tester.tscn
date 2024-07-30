@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dq6gigda1jw5e"]
+[gd_scene load_steps=14 format=3 uid="uid://dq6gigda1jw5e"]
 
 [ext_resource type="Script" path="res://scene scripts/BBCODE Tester/bbcode tester.gd" id="1_5m88s"]
 [ext_resource type="Shader" path="res://assets/shaders/CRT.gdshader" id="2_vomp7"]
+[ext_resource type="Shader" path="res://assets/shaders/generic sky.gdshader" id="3_e8t74"]
+[ext_resource type="Shader" path="res://assets/shaders/watah.gdshader" id="4_4c5nq"]
+[ext_resource type="Texture2D" uid="uid://cawayb3orwx2c" path="res://assets/backgrounds/clear+sea+water-1024x1024.png" id="5_loejl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gx7i1"]
 shader = ExtResource("2_vomp7")
@@ -20,6 +23,54 @@ shader_parameter/roll_speed = 2.0
 shader_parameter/scan_line_strength = -8.0
 shader_parameter/pixel_strength = -2.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jno83"]
+shader = ExtResource("3_e8t74")
+shader_parameter/sky_color = Color(0.678484, 0.387565, 0.709292, 1)
+shader_parameter/horizion_color = Color(1, 0.689963, 0.405234, 1)
+shader_parameter/sun_color = Color(1, 1, 0, 1)
+shader_parameter/sun_radius = 0.9
+
+[sub_resource type="Sky" id="Sky_txbs5"]
+sky_material = SubResource("ShaderMaterial_jno83")
+
+[sub_resource type="Environment" id="Environment_hppxw"]
+background_mode = 2
+sky = SubResource("Sky_txbs5")
+ambient_light_source = 3
+reflected_light_source = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hhnmb"]
+size = Vector2(50, 50)
+subdivide_width = 50
+subdivide_depth = 50
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l5o67"]
+noise_type = 3
+frequency = 0.001
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m2m4h"]
+width = 1024
+height = 1024
+in_3d_space = true
+seamless = true
+noise = SubResource("FastNoiseLite_l5o67")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orrli"]
+render_priority = 0
+shader = ExtResource("4_4c5nq")
+shader_parameter/albedo = Color(0.158968, 0.688946, 0.927, 1)
+shader_parameter/scroll_speed1 = Vector2(0.01, 0)
+shader_parameter/scroll_speed2 = Vector2(-0.01, 0)
+shader_parameter/blend_factor = 0.5
+shader_parameter/scale1 = Vector2(1, 1)
+shader_parameter/scale2 = Vector2(1, 1)
+shader_parameter/wave_strength = 0.4
+shader_parameter/wave_scale = 0.02
+shader_parameter/pixelation_level = 64
+shader_parameter/water_texture1 = ExtResource("5_loejl")
+shader_parameter/water_texture2 = ExtResource("5_loejl")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_m2m4h")
+
 [node name="BbcodeTester" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -28,6 +79,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5m88s")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 
 [node name="Back Button" type="Button" parent="."]
 layout_mode = 1
@@ -72,7 +140,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.243314, 0.240321, 0.241067, 1)
+color = Color(0.243137, 0.239216, 0.239216, 0.509804)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BBCodeTestBox"]
 layout_mode = 1
@@ -94,6 +162,48 @@ size_flags_horizontal = 3
 placeholder_text = "your text here. you can make it [b]bold[/b] [i]italic[/i] or even [wave][rainbow]rainbow[/rainbow][/wave]"
 wrap_mode = 1
 
+[node name="InputRichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_top = 0.196
+anchor_right = 0.851
+anchor_bottom = 0.196
+offset_left = 0.23999
+offset_top = -0.00800323
+offset_right = -0.35199
+offset_bottom = 22.992
+bbcode_enabled = true
+text = "[center]input"
+
+[node name="OutputRichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.156
+anchor_top = 0.196
+anchor_right = 0.5
+anchor_bottom = 0.196
+offset_left = 0.287994
+offset_top = -0.00800323
+offset_right = 7.0
+offset_bottom = 22.992
+bbcode_enabled = true
+text = "[center]output"
+
+[node name="Bottom Text" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.157
+anchor_top = 0.901
+anchor_right = 0.851
+anchor_bottom = 0.901
+offset_left = 0.135986
+offset_top = 0.151978
+offset_right = 0.64801
+offset_bottom = 25.152
+bbcode_enabled = true
+text = "[center]you can read the bbcode documentation [url=https://docs.godotengine.org/en/4.1/tutorials/ui/bbcode_in_richtextlabel.html]here[/url]"
+
 [node name="Overlay" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_gx7i1")
 layout_mode = 1
@@ -105,19 +215,21 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Bottom Text" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.156
-anchor_top = 0.849
-anchor_right = 0.851
-anchor_bottom = 0.849
-offset_left = 0.287994
-offset_top = -0.152039
-offset_right = -0.35199
-offset_bottom = 69.848
-bbcode_enabled = true
-text = "[center]you can read the bbcode documentation [url=https://docs.godotengine.org/en/4.1/tutorials/ui/bbcode_in_richtextlabel.html]here[/url]"
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hppxw")
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 7.72841e-08, 0.467436, 0.884027, -4.08646e-08, 0.884027, -0.467436, -2.75615, 0, 0)
+sky_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.94645, 0, 0)
+sky_mode = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -24)
+mesh = SubResource("PlaneMesh_hhnmb")
+surface_material_override/0 = SubResource("ShaderMaterial_orrli")
 
 [connection signal="pressed" from="Back Button" to="." method="_on_back_button_pressed"]
 [connection signal="meta_clicked" from="Bottom Text" to="." method="_on_bottom_text_meta_clicked"]

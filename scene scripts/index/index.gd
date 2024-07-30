@@ -1,7 +1,7 @@
 extends Control
 
 var strings = [
-	"HIII",
+	"hii",
 	"Joel",
 	"subtext",
 	"jetsWave",
@@ -16,7 +16,8 @@ var strings = [
 	"(not) Sponsored by Godot (yet)",
 	"AS SEEN ON [url]https://twitch.tv/cr4zyk1tty[/url]", 
 	"[color=red]WAKE UP WAKE UP WAKE UP WAKE UP WAKE UP[/color]", #that_one_valokas
-	"i never stopped believing"
+	"i never stopped believing",
+	"[wave][color=39c5bb]MIKU MIKU BEEAAAM!!!!",
 ]
 
 @onready var subtext = $subtext
@@ -31,6 +32,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	#rng()
 	if Input.is_action_just_pressed("[DEBUG] change subtext"):
 		change_text()
 		rng()
@@ -44,7 +46,11 @@ func rng():
 	print(rng_number)
 	if rng_number == 1:
 		print("THE NUMBER IS REAL")
+		jetsWave()
+
+func jetsWave():
 		$cube.hide()
+		subtext.text = "[outline_color=000000][outline_size=8][font_size=16][wave connected=0][center]" + "[img]res://assets/emotes/jetsWave.png[/img] hii"
 		$jetpack.show()
 		$"jetpack credit".show()
 

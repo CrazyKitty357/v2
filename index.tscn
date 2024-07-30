@@ -1,13 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://5ygbtmfx8hxl"]
+[gd_scene load_steps=22 format=3 uid="uid://5ygbtmfx8hxl"]
 
 [ext_resource type="Shader" path="res://assets/shaders/CRT.gdshader" id="1_1hd1w"]
 [ext_resource type="Shader" path="res://assets/shaders/transparency.gdshader" id="1_a1mp4"]
 [ext_resource type="Script" path="res://scene scripts/index/index.gd" id="1_q3lav"]
 [ext_resource type="Texture2D" uid="uid://cxke2c6mdc55d" path="res://assets/logos/twitter.png" id="2_gbfmo"]
+[ext_resource type="Script" path="res://type.gd" id="2_qfcon"]
 [ext_resource type="Texture2D" uid="uid://cu6gl46sdlhvp" path="res://assets/logos/twitch.png" id="2_x0q7w"]
 [ext_resource type="Shader" path="res://assets/shaders/checkerboard.gdshader" id="5_n8mfj"]
-[ext_resource type="PackedScene" uid="uid://d34vxj4qylf6a" path="res://assets/models/jetpack.vrm" id="7_kxecg"]
-[ext_resource type="Script" path="res://addons/vrm/vrm_spring_bone.gd" id="8_g2p4r"]
+[ext_resource type="PackedScene" uid="uid://dbrcol13ukdmu" path="res://assets/models/jetpack.vrm" id="7_kxecg"]
 
 [sub_resource type="Gradient" id="Gradient_h7sjx"]
 colors = PackedColorArray(0.923819, 0.518259, 0.799163, 1, 0.195241, 0.693698, 0.889641, 1)
@@ -129,25 +129,6 @@ shader = ExtResource("5_n8mfj")
 shader_parameter/grid_size_x = 20.0
 shader_parameter/grid_size_y = 20.0
 
-[sub_resource type="Resource" id="Resource_07nyl"]
-resource_name = "Tail1"
-script = ExtResource("8_g2p4r")
-comment = ""
-joint_nodes = PackedStringArray("Tail1", "Tail2", "Tail3", "Tail4", "Tail5", "Tail6", "Tail6_end", "")
-stiffness_scale = 1.0
-drag_force_scale = 0.4
-hit_radius_scale = 0.02
-gravity_scale = 0.0
-gravity_dir_default = Vector3(0, -1, 0)
-collider_groups = Array[Resource("res://addons/vrm/vrm_collider_group.gd")]([])
-stiffness_force = PackedFloat64Array()
-gravity_power = PackedFloat64Array()
-gravity_dir = PackedVector3Array()
-drag_force = PackedFloat64Array()
-hit_radius = PackedFloat64Array()
-center_bone = ""
-center_node = NodePath("")
-
 [node name="Index" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -156,6 +137,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q3lav")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("2_qfcon")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -177,6 +161,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(1152, 648)
+render_target_clear_mode = 2
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
@@ -279,14 +264,14 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 850.0
+offset_left = 773.0
 offset_top = -47.0
 offset_right = -7.0
 offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 0
 bbcode_enabled = true
-text = "[outline_color=000000][outline_size=6][right]Model of [url=https://twitch.tv/jeanfaymas]Jean Faymas[/url] masott by [url=https://x.com/Piesonscreation]Gon[/url]"
+text = "[outline_color=000000][outline_size=6][right]Model of [url=https://twitch.tv/jeanfaymas]Jean Faymas[/url] chat masot by [url=https://x.com/Piesonscreation]Gon[/url]"
 fit_content = true
 
 [node name="Overlay" type="ColorRect" parent="."]
@@ -323,7 +308,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_uax4r")
 [node name="jetpack" parent="." instance=ExtResource("7_kxecg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 1.23)
 visible = false
-spring_bones = Array[ExtResource("8_g2p4r")]([SubResource("Resource_07nyl")])
 
 [connection signal="meta_clicked" from="subtext" to="." method="_on_subtext_meta_clicked"]
 [connection signal="pressed" from="GimmickPage" to="." method="_on_gimmick_page_pressed"]

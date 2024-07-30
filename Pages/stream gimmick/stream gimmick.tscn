@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cx6gvoc8gmre1"]
+[gd_scene load_steps=6 format=3 uid="uid://cx6gvoc8gmre1"]
 
 [ext_resource type="Shader" path="res://assets/shaders/CRT.gdshader" id="1_igv7x"]
 [ext_resource type="Script" path="res://scene scripts/Stream Gimmicks/stream gimmick.gd" id="1_pliam"]
 [ext_resource type="Shader" path="res://assets/shaders/rounded_boarders.gdshader" id="2_2yj3s"]
-[ext_resource type="Texture2D" uid="uid://diplwq8i6xob5" path="res://assets/backgrounds/bliss.png" id="2_o45kc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4w7q0"]
 shader = ExtResource("2_2yj3s")
@@ -11,20 +10,6 @@ shader_parameter/top_left_radius = 0.0
 shader_parameter/top_right_radius = 0.0
 shader_parameter/bottom_left_radius = 0.0
 shader_parameter/bottom_right_radius = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mykii"]
-shader = ExtResource("2_2yj3s")
-shader_parameter/top_left_radius = 1.0
-shader_parameter/top_right_radius = 1.0
-shader_parameter/bottom_left_radius = 0.0
-shader_parameter/bottom_right_radius = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xiedq"]
-shader = ExtResource("2_2yj3s")
-shader_parameter/top_left_radius = 0.0
-shader_parameter/top_right_radius = 0.0
-shader_parameter/bottom_left_radius = 0.1
-shader_parameter/bottom_right_radius = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r3bx5"]
 shader = ExtResource("1_igv7x")
@@ -52,15 +37,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pliam")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_o45kc")
-expand_mode = 2
+color = Color(0, 0.501961, 0.501961, 1)
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 1
@@ -104,6 +88,7 @@ mouse_default_cursor_shape = 2
 text = "BBCode Tester"
 
 [node name="Window" type="Control" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_4w7q0")
 layout_mode = 1
 anchor_left = 0.299
@@ -116,7 +101,6 @@ offset_right = 0.25592
 offset_bottom = -0.0400085
 
 [node name="TopWindowColor" type="ColorRect" parent="Window"]
-material = SubResource("ShaderMaterial_mykii")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -124,7 +108,7 @@ anchor_bottom = 0.09
 offset_right = 3.05176e-05
 offset_bottom = -0.0300007
 grow_horizontal = 2
-color = Color(0.199417, 0.459021, 0.739298, 1)
+color = Color(0.00784314, 0, 0.501961, 1)
 
 [node name="TopWindowText" type="RichTextLabel" parent="Window"]
 layout_mode = 1
@@ -137,7 +121,6 @@ text = "[center]test text that is somewhat long lol."
 fit_content = true
 
 [node name="BottomWindowColor" type="ColorRect" parent="Window"]
-material = SubResource("ShaderMaterial_xiedq")
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.09
@@ -145,6 +128,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -0.0300007
 offset_right = 3.05176e-05
+color = Color(0.752941, 0.752941, 0.752941, 1)
 
 [node name="BottomWindowText" type="RichTextLabel" parent="Window"]
 layout_mode = 1
